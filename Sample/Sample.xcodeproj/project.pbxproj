@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2F026B5613BFBF7000D7D8FC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F026B5513BFBF7000D7D8FC /* UIKit.framework */; };
+		2F026B5813BFBF7000D7D8FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F026B5713BFBF7000D7D8FC /* Foundation.framework */; };
+		2F026B5A13BFBF7000D7D8FC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F026B5913BFBF7000D7D8FC /* CoreGraphics.framework */; };
+		2F549A1D13E87988001C13B9 /* SquareKitConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F549A1C13E87988001C13B9 /* SquareKitConstants.m */; };
+		2F59A96513D79F0D0056CC38 /* NSError-SQAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F59A96413D79F0D0056CC38 /* NSError-SQAdditions.m */; };
+		2F80D02F13E097E700B40F62 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F80D01613E097E700B40F62 /* JSONKit.m */; };
+		2F83111113BFC01100663160 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83110A13BFC01100663160 /* main.m */; };
+		2F83111213BFC01100663160 /* SampleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83110D13BFC01100663160 /* SampleAppDelegate.m */; };
+		2F83111313BFC01100663160 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F83110F13BFC01100663160 /* MainWindow.xib */; };
+		2F83113613BFC15600663160 /* NSDictionary-SQAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83112013BFC15600663160 /* NSDictionary-SQAdditions.m */; };
+		2F83113713BFC15600663160 /* NSObject-SQAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83112213BFC15600663160 /* NSObject-SQAdditions.m */; };
+		2F83113813BFC15600663160 /* NSString-SQAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83112413BFC15600663160 /* NSString-SQAdditions.m */; };
+		2F83113913BFC15600663160 /* NSURL-SQAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83112613BFC15600663160 /* NSURL-SQAdditions.m */; };
+		2F83113D13BFC15600663160 /* SQMoney.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83112F13BFC15600663160 /* SQMoney.m */; };
+		2F83113E13BFC15600663160 /* SQTerminalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83113113BFC15600663160 /* SQTerminalRequest.m */; };
+		2F83113F13BFC15600663160 /* SQTerminalResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83113313BFC15600663160 /* SQTerminalResponse.m */; };
+		2F83114013BFC15600663160 /* SquareKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F83113513BFC15600663160 /* SquareKit.m */; };
+		2FAB29D513E1C87A0083B28E /* SQTerminalLegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAB29D313E1C87A0083B28E /* SQTerminalLegalViewController.m */; };
+		2FAB29D613E1C87A0083B28E /* SQTerminalLegalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FAB29D413E1C87A0083B28E /* SQTerminalLegalViewController.xib */; };
+		2FBF004B13C386EA00CDF491 /* SQTerminalLauncher.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FBF004913C386EA00CDF491 /* SQTerminalLauncher.xib */; };
+		59B1771E13F30FFF002DD443 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B1771D13F30FFF002DD443 /* Icon.png */; };
+		59B1772013F3100C002DD443 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B1771F13F3100C002DD443 /* Icon@2x.png */; };
+		C425FB14146B377400140604 /* SQTerminalHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C425FB12146B377400140604 /* SQTerminalHomeViewController.m */; };
+		C425FB15146B377400140604 /* SQTerminalHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C425FB13146B377400140604 /* SQTerminalHomeViewController.xib */; };
+		C425FB1B146B5DBA00140604 /* SQDonationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C425FB1A146B5DBA00140604 /* SQDonationModel.m */; };
+		C425FB20146B77BE00140604 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C425FB1E146B77BE00140604 /* bg.png */; };
+		C427DBD5146DA9A600494016 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C427DBD4146DA9A600494016 /* logo.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2F026B5113BFBF7000D7D8FC /* Jackson.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jackson.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F026B5513BFBF7000D7D8FC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2F026B5713BFBF7000D7D8FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2F026B5913BFBF7000D7D8FC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2F549A1B13E87988001C13B9 /* SquareKitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareKitConstants.h; sourceTree = "<group>"; };
+		2F549A1C13E87988001C13B9 /* SquareKitConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareKitConstants.m; sourceTree = "<group>"; };
+		2F59A96313D79F0D0056CC38 /* NSError-SQAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError-SQAdditions.h"; sourceTree = "<group>"; };
+		2F59A96413D79F0D0056CC38 /* NSError-SQAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError-SQAdditions.m"; sourceTree = "<group>"; };
+		2F80D01513E097E700B40F62 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		2F80D01613E097E700B40F62 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		2F83110A13BFC01100663160 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2F83110B13BFC01100663160 /* Sample-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sample-Prefix.pch"; sourceTree = "<group>"; };
+		2F83110C13BFC01100663160 /* SampleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleAppDelegate.h; sourceTree = "<group>"; };
+		2F83110D13BFC01100663160 /* SampleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleAppDelegate.m; sourceTree = "<group>"; };
+		2F83110F13BFC01100663160 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		2F83111013BFC01100663160 /* Sample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sample-Info.plist"; sourceTree = "<group>"; };
+		2F83111F13BFC15600663160 /* NSDictionary-SQAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary-SQAdditions.h"; sourceTree = "<group>"; };
+		2F83112013BFC15600663160 /* NSDictionary-SQAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary-SQAdditions.m"; sourceTree = "<group>"; };
+		2F83112113BFC15600663160 /* NSObject-SQAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject-SQAdditions.h"; sourceTree = "<group>"; };
+		2F83112213BFC15600663160 /* NSObject-SQAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-SQAdditions.m"; sourceTree = "<group>"; };
+		2F83112313BFC15600663160 /* NSString-SQAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString-SQAdditions.h"; sourceTree = "<group>"; };
+		2F83112413BFC15600663160 /* NSString-SQAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString-SQAdditions.m"; sourceTree = "<group>"; };
+		2F83112513BFC15600663160 /* NSURL-SQAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL-SQAdditions.h"; sourceTree = "<group>"; };
+		2F83112613BFC15600663160 /* NSURL-SQAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL-SQAdditions.m"; sourceTree = "<group>"; };
+		2F83112E13BFC15600663160 /* SQMoney.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQMoney.h; sourceTree = "<group>"; };
+		2F83112F13BFC15600663160 /* SQMoney.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQMoney.m; sourceTree = "<group>"; };
+		2F83113013BFC15600663160 /* SQTerminalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQTerminalRequest.h; sourceTree = "<group>"; };
+		2F83113113BFC15600663160 /* SQTerminalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQTerminalRequest.m; sourceTree = "<group>"; };
+		2F83113213BFC15600663160 /* SQTerminalResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQTerminalResponse.h; sourceTree = "<group>"; };
+		2F83113313BFC15600663160 /* SQTerminalResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQTerminalResponse.m; sourceTree = "<group>"; };
+		2F83113413BFC15600663160 /* SquareKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareKit.h; sourceTree = "<group>"; };
+		2F83113513BFC15600663160 /* SquareKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareKit.m; sourceTree = "<group>"; };
+		2FAB29D213E1C87A0083B28E /* SQTerminalLegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQTerminalLegalViewController.h; sourceTree = "<group>"; };
+		2FAB29D313E1C87A0083B28E /* SQTerminalLegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQTerminalLegalViewController.m; sourceTree = "<group>"; };
+		2FAB29D413E1C87A0083B28E /* SQTerminalLegalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SQTerminalLegalViewController.xib; sourceTree = "<group>"; };
+		2FBF004913C386EA00CDF491 /* SQTerminalLauncher.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SQTerminalLauncher.xib; path = ../Classes/SQTerminalLauncher.xib; sourceTree = "<group>"; };
+		59B1771D13F30FFF002DD443 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		59B1771F13F3100C002DD443 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		C425FB11146B377400140604 /* SQTerminalHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQTerminalHomeViewController.h; sourceTree = "<group>"; };
+		C425FB12146B377400140604 /* SQTerminalHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQTerminalHomeViewController.m; sourceTree = "<group>"; };
+		C425FB13146B377400140604 /* SQTerminalHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SQTerminalHomeViewController.xib; sourceTree = "<group>"; };
+		C425FB19146B5DBA00140604 /* SQDonationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQDonationModel.h; sourceTree = "<group>"; };
+		C425FB1A146B5DBA00140604 /* SQDonationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQDonationModel.m; sourceTree = "<group>"; };
+		C425FB1E146B77BE00140604 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		C427DBD4146DA9A600494016 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		F17B909113EB279C006AEDE3 /* SQTerminalConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQTerminalConstants.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2F026B4E13BFBF7000D7D8FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F026B5613BFBF7000D7D8FC /* UIKit.framework in Frameworks */,
+				2F026B5813BFBF7000D7D8FC /* Foundation.framework in Frameworks */,
+				2F026B5A13BFBF7000D7D8FC /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2F026B4613BFBF7000D7D8FC = {
+			isa = PBXGroup;
+			children = (
+				2F83110913BFC01100663160 /* Classes */,
+				F1E741A013F1CEE40085F02F /* Additional Sources */,
+				2F83110E13BFC01100663160 /* Resources */,
+				2F026B5413BFBF7000D7D8FC /* Frameworks */,
+				2F026B5213BFBF7000D7D8FC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2F026B5213BFBF7000D7D8FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2F026B5113BFBF7000D7D8FC /* Jackson.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2F026B5413BFBF7000D7D8FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F80CFEE13E097E700B40F62 /* JSONKit */,
+				2F83111D13BFC15600663160 /* SquareKit */,
+				2F026B5513BFBF7000D7D8FC /* UIKit.framework */,
+				2F026B5713BFBF7000D7D8FC /* Foundation.framework */,
+				2F026B5913BFBF7000D7D8FC /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2F80CFEE13E097E700B40F62 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				2F80D01513E097E700B40F62 /* JSONKit.h */,
+				2F80D01613E097E700B40F62 /* JSONKit.m */,
+			);
+			name = JSONKit;
+			path = Frameworks/JSONKit;
+			sourceTree = "<group>";
+		};
+		2F83110913BFC01100663160 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2F83110C13BFC01100663160 /* SampleAppDelegate.h */,
+				2F83110D13BFC01100663160 /* SampleAppDelegate.m */,
+				C425FB1C146B5EB700140604 /* Model */,
+				F1E741A313F1D2990085F02F /* View Controllers */,
+				F17B909113EB279C006AEDE3 /* SQTerminalConstants.h */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		2F83110E13BFC01100663160 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C427DBD4146DA9A600494016 /* logo.png */,
+				C425FB1E146B77BE00140604 /* bg.png */,
+				2F83110F13BFC01100663160 /* MainWindow.xib */,
+				2FBF004913C386EA00CDF491 /* SQTerminalLauncher.xib */,
+				59B1771D13F30FFF002DD443 /* Icon.png */,
+				59B1771F13F3100C002DD443 /* Icon@2x.png */,
+				2F83111013BFC01100663160 /* Sample-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2F83111D13BFC15600663160 /* SquareKit */ = {
+			isa = PBXGroup;
+			children = (
+				2F83111E13BFC15600663160 /* Categories */,
+				2F83112713BFC15600663160 /* Classes */,
+				2F83113413BFC15600663160 /* SquareKit.h */,
+				2F83113513BFC15600663160 /* SquareKit.m */,
+				2F549A1B13E87988001C13B9 /* SquareKitConstants.h */,
+				2F549A1C13E87988001C13B9 /* SquareKitConstants.m */,
+			);
+			name = SquareKit;
+			path = ../SquareKit;
+			sourceTree = "<group>";
+		};
+		2F83111E13BFC15600663160 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				2F83111F13BFC15600663160 /* NSDictionary-SQAdditions.h */,
+				2F83112013BFC15600663160 /* NSDictionary-SQAdditions.m */,
+				2F83112113BFC15600663160 /* NSObject-SQAdditions.h */,
+				2F83112213BFC15600663160 /* NSObject-SQAdditions.m */,
+				2F83112313BFC15600663160 /* NSString-SQAdditions.h */,
+				2F83112413BFC15600663160 /* NSString-SQAdditions.m */,
+				2F83112513BFC15600663160 /* NSURL-SQAdditions.h */,
+				2F83112613BFC15600663160 /* NSURL-SQAdditions.m */,
+				2F59A96313D79F0D0056CC38 /* NSError-SQAdditions.h */,
+				2F59A96413D79F0D0056CC38 /* NSError-SQAdditions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		2F83112713BFC15600663160 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2F83112E13BFC15600663160 /* SQMoney.h */,
+				2F83112F13BFC15600663160 /* SQMoney.m */,
+				2F83113013BFC15600663160 /* SQTerminalRequest.h */,
+				2F83113113BFC15600663160 /* SQTerminalRequest.m */,
+				2F83113213BFC15600663160 /* SQTerminalResponse.h */,
+				2F83113313BFC15600663160 /* SQTerminalResponse.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		C425FB1C146B5EB700140604 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C425FB19146B5DBA00140604 /* SQDonationModel.h */,
+				C425FB1A146B5DBA00140604 /* SQDonationModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		F1E741A013F1CEE40085F02F /* Additional Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2F83110A13BFC01100663160 /* main.m */,
+				2F83110B13BFC01100663160 /* Sample-Prefix.pch */,
+			);
+			name = "Additional Sources";
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F1E741A313F1D2990085F02F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2FAB29D413E1C87A0083B28E /* SQTerminalLegalViewController.xib */,
+				2FAB29D213E1C87A0083B28E /* SQTerminalLegalViewController.h */,
+				2FAB29D313E1C87A0083B28E /* SQTerminalLegalViewController.m */,
+				C425FB13146B377400140604 /* SQTerminalHomeViewController.xib */,
+				C425FB11146B377400140604 /* SQTerminalHomeViewController.h */,
+				C425FB12146B377400140604 /* SQTerminalHomeViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2F026B5013BFBF7000D7D8FC /* Sample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F026B7713BFBF7000D7D8FC /* Build configuration list for PBXNativeTarget "Sample" */;
+			buildPhases = (
+				2F026B4D13BFBF7000D7D8FC /* Sources */,
+				2F026B4E13BFBF7000D7D8FC /* Frameworks */,
+				2F026B4F13BFBF7000D7D8FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sample;
+			productName = Sample;
+			productReference = 2F026B5113BFBF7000D7D8FC /* Jackson.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2F026B4813BFBF7000D7D8FC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 2F026B4B13BFBF7000D7D8FC /* Build configuration list for PBXProject "Sample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2F026B4613BFBF7000D7D8FC;
+			productRefGroup = 2F026B5213BFBF7000D7D8FC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2F026B5013BFBF7000D7D8FC /* Sample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2F026B4F13BFBF7000D7D8FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F83111313BFC01100663160 /* MainWindow.xib in Resources */,
+				2FBF004B13C386EA00CDF491 /* SQTerminalLauncher.xib in Resources */,
+				2FAB29D613E1C87A0083B28E /* SQTerminalLegalViewController.xib in Resources */,
+				59B1771E13F30FFF002DD443 /* Icon.png in Resources */,
+				59B1772013F3100C002DD443 /* Icon@2x.png in Resources */,
+				C425FB15146B377400140604 /* SQTerminalHomeViewController.xib in Resources */,
+				C425FB20146B77BE00140604 /* bg.png in Resources */,
+				C427DBD5146DA9A600494016 /* logo.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2F026B4D13BFBF7000D7D8FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F83111113BFC01100663160 /* main.m in Sources */,
+				2F83111213BFC01100663160 /* SampleAppDelegate.m in Sources */,
+				2F83113613BFC15600663160 /* NSDictionary-SQAdditions.m in Sources */,
+				2F83113713BFC15600663160 /* NSObject-SQAdditions.m in Sources */,
+				2F83113813BFC15600663160 /* NSString-SQAdditions.m in Sources */,
+				2F83113913BFC15600663160 /* NSURL-SQAdditions.m in Sources */,
+				2F83113D13BFC15600663160 /* SQMoney.m in Sources */,
+				2F83113E13BFC15600663160 /* SQTerminalRequest.m in Sources */,
+				2F83113F13BFC15600663160 /* SQTerminalResponse.m in Sources */,
+				2F83114013BFC15600663160 /* SquareKit.m in Sources */,
+				2F59A96513D79F0D0056CC38 /* NSError-SQAdditions.m in Sources */,
+				2F80D02F13E097E700B40F62 /* JSONKit.m in Sources */,
+				2FAB29D513E1C87A0083B28E /* SQTerminalLegalViewController.m in Sources */,
+				2F549A1D13E87988001C13B9 /* SquareKitConstants.m in Sources */,
+				C425FB14146B377400140604 /* SQTerminalHomeViewController.m in Sources */,
+				C425FB1B146B5DBA00140604 /* SQDonationModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2F026B7513BFBF7000D7D8FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2F026B7613BFBF7000D7D8FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2F026B7813BFBF7000D7D8FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Classes/Sample-Prefix.pch";
+				INFOPLIST_FILE = "Resources/Sample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = Jackson;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2F026B7913BFBF7000D7D8FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Classes/Sample-Prefix.pch";
+				INFOPLIST_FILE = "Resources/Sample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = Jackson;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2F026B4B13BFBF7000D7D8FC /* Build configuration list for PBXProject "Sample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F026B7513BFBF7000D7D8FC /* Debug */,
+				2F026B7613BFBF7000D7D8FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F026B7713BFBF7000D7D8FC /* Build configuration list for PBXNativeTarget "Sample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F026B7813BFBF7000D7D8FC /* Debug */,
+				2F026B7913BFBF7000D7D8FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2F026B4813BFBF7000D7D8FC /* Project object */;
+}
