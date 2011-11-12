@@ -265,6 +265,27 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSInteger nextTag = textField.tag + 1;
+    UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+    
+    if (nextResponder)
+    {
+        [nextResponder becomeFirstResponder];
+    }
+    else if ([self _fieldsValid])
+    {
+        [self continuePressed:nil];
+    }
+    else
+    {
+        [textField resignFirstResponder];
+    }
+    
+    return NO; // We do not want UITextField to insert line-breaks.
+}
+
 - (void)_validateFields
 {    
     self.contributeButton.enabled = [self _fieldsValid];

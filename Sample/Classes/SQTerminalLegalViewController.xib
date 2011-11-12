@@ -396,6 +396,7 @@ bmF0ZWQgZm9yIHRoZSAyMDEyIGdlbmVyYWwgZWxlY3Rpb24uA</bytes>
 												<string key="NSFrame">{{163, 16}, {140, 40}}</string>
 												<reference key="NSSuperview" ref="667554013"/>
 												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:225</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -448,7 +449,7 @@ bmF0ZWQgZm9yIHRoZSAyMDEyIGdlbmVyYWwgZWxlY3Rpb24uA</bytes>
 												<reference key="IBUIFont" ref="1012330523"/>
 											</object>
 										</object>
-										<string key="NSFrame">{{1, 1308}, {320, 284}}</string>
+										<string key="NSFrame">{{0, 1308}, {320, 284}}</string>
 										<reference key="NSSuperview" ref="262457236"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="708585084"/>
