@@ -28,6 +28,9 @@
 - (void)_validateFields;
 - (BOOL)_fieldsValid;
 
+- (void)_scootToFirstResponderAnimated:(BOOL)animated;
+- (void)_scootToField:(UITextField *)textField animated:(BOOL)animated;
+
 @end
 
 @implementation SQTerminalHomeViewController
@@ -160,6 +163,10 @@
         
         self.scroller.contentOffset = CGPointZero;
     }
+    else
+    {
+        [self _scootToFirstResponderAnimated:NO];
+    }
 }
 
 - (void)viewDidUnload
@@ -220,10 +227,7 @@
 
 -(IBAction)fieldDidBeginEditing:(id)sender
 {
-    UITextField *textField = sender;
-    CGFloat contentHeight = MIN(textField.frame.origin.y - 80, self.scroller.contentSize.height - self.scroller.bounds.size.height);
-    
-    [self.scroller setContentOffset:CGPointMake(0, contentHeight) animated:YES];
+    [self _scootToField:sender animated:YES];
 }
 
 -(IBAction)fieldDidChange:(id)sender
@@ -286,6 +290,46 @@
     return NO; // We do not want UITextField to insert line-breaks.
 }
 
+#pragma mark - Keyboarding
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+    CGRect scrollerFrame = self.scroller.frame;
+    scrollerFrame.size.height -= kbSize.height;
+    self.scroller.frame = scrollerFrame;
+    
+    [self _scootToFirstResponderAnimated:YES];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    CGRect scrollerFrame = self.scroller.frame;
+    scrollerFrame.size.height += kbSize.height;
+    self.scroller.frame = scrollerFrame;
+    
+    [self _scootToFirstResponderAnimated:YES];
+}
+
+#pragma mark - Actions
+
+-(IBAction)continuePressed:(id)sender
+{
+    [self _save];
+    
+    SQTerminalLegalViewController *legalViewController = [[[SQTerminalLegalViewController alloc] init] autorelease];
+    
+    [self.navigationController pushViewController:legalViewController animated:YES];
+}
+
+#pragma mark - Privates
+
 - (void)_validateFields
 {    
     self.contributeButton.enabled = [self _fieldsValid];
@@ -319,31 +363,23 @@
     return isValid;
 }
 
-#pragma mark - Keyboarding
-
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)_scootToFirstResponderAnimated:(BOOL)animated
 {
-    NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    self.scroller.contentSize = CGSizeMake(self.scroller.bounds.size.width, self.formView.bounds.size.height + kbSize.height);
+    NSArray *subViews = self.formView.subviews;
+    for (UIView *subView in subViews)
+    {
+        if ([subView isFirstResponder] && [subView isKindOfClass:[UITextField class]])
+        {
+            [self _scootToField:(UITextField *)subView animated:NO];
+        }
+    }
 }
 
-// Called when the UIKeyboardWillHideNotification is sent
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+- (void)_scootToField:(UITextField *)textField animated:(BOOL)animated
 {
-    self.scroller.contentSize = CGSizeMake(self.scroller.bounds.size.width, self.formView.bounds.size.height);
-}
-
-#pragma mark - Actions
-
--(IBAction)continuePressed:(id)sender
-{
-    [self _save];
+    CGFloat contentHeight = MIN(textField.frame.origin.y - 80, self.scroller.contentSize.height - self.scroller.bounds.size.height);
     
-    SQTerminalLegalViewController *legalViewController = [[[SQTerminalLegalViewController alloc] init] autorelease];
-    
-    [self.navigationController pushViewController:legalViewController animated:YES];
+    [self.scroller setContentOffset:CGPointMake(0, contentHeight) animated:animated];
 }
 
 
