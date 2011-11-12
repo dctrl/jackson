@@ -70,20 +70,31 @@
     self.contributeButton = nil;
 }
 
-- (void)removeObservers
+- (void)addKeyboardObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)removeKeyboardObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardDidShowNotification
+                                                    name:UIKeyboardWillShowNotification
                                                   object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardDidShowNotification
+                                                    name:UIKeyboardWillHideNotification
                                                   object:nil];
 }
 
 - (void)dealloc
 {
-    [self removeObservers];
+    [self removeKeyboardObservers];
     [self releaseOutlets];
     
     [super dealloc];
@@ -126,14 +137,6 @@
     UIView *legaleseView = [self.view viewWithTag:100];
     legaleseView.layer.cornerRadius = 6.0f;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
     [self _load];
 }
 
@@ -169,13 +172,27 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self addKeyboardObservers];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self removeKeyboardObservers];
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     
     [self _save];
     
-    [self removeObservers];
+    [self removeKeyboardObservers];
     [self releaseOutlets];
 }
 
@@ -292,19 +309,25 @@
 
 #pragma mark - Keyboarding
 
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)keyboardWillShow:(NSNotification*)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
 
-    CGRect scrollerFrame = self.scroller.frame;
-    scrollerFrame.size.height -= kbSize.height;
-    self.scroller.frame = scrollerFrame;
-    
-    [self _scootToFirstResponderAnimated:YES];
+    //
+    // Reduce the scroller at the same rate as the keyboard is coming up.
+    //
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                            CGRect scrollerFrame = self.scroller.frame;
+                            scrollerFrame.size.height -= kbSize.height;
+                            self.scroller.frame = scrollerFrame;
+                        }
+                     completion:nil];
 }
 
-// Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
@@ -313,8 +336,6 @@
     CGRect scrollerFrame = self.scroller.frame;
     scrollerFrame.size.height += kbSize.height;
     self.scroller.frame = scrollerFrame;
-    
-    [self _scootToFirstResponderAnimated:YES];
 }
 
 #pragma mark - Actions
