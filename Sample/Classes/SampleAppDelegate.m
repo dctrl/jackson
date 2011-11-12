@@ -15,38 +15,43 @@
 //
 
 #import "SampleAppDelegate.h"
-#import "SQTerminalHomeViewController.h"
-#import "SQTerminalLegalViewController.h"
-#import "SquareKit.h"
 #import "NSURL-SQAdditions.h"
-#import "SQDonationModel.h"
-
-
-static NSString *const SQURLAPISetupHost = @"setup";
-static NSString *const SQURLAPISetupAppIDParamaterKey = @"appID";
-static NSString *const SQURLAPISetupRecipientParamaterKey = @"to";
-
-
+#import "SQDonation.h"
+#import "SQDonationFormViewController.h"
+#import "SquareKit.h"
 
 
 @interface SampleAppDelegate ()
 
-- (void)handleTerminalResponse:(SQTerminalResponse *)terminalResponse;
+- (void)_handleTerminalResponse:(SQTerminalResponse *)terminalResponse;
 
 @end
-
 
 @implementation SampleAppDelegate
 
 @synthesize window;
 @synthesize navController;
 
+#pragma mark - Initialization
+
+- (void)dealloc;
+{
+    self.window = nil;
+    self.navController = nil;
+    
+    [super dealloc];
+}
+
+#pragma mark - UIApplicationDelegate
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 {    
-    // Create a HomeViewController
-    SQTerminalHomeViewController *homeViewController = [[SQTerminalHomeViewController alloc] init];
+    SQDonationFormViewController *homeViewController = [[SQDonationFormViewController alloc] init];
     
-    self.navController = [[[UINavigationController alloc] initWithRootViewController:homeViewController] autorelease];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
+    self.navController = navigationController;
+    
+    [navigationController release];
     [homeViewController release];
     
     self.navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
@@ -55,95 +60,59 @@ static NSString *const SQURLAPISetupRecipientParamaterKey = @"to";
     [self.window addSubview:self.navController.view];
     [self.window makeKeyAndVisible];
     
-    // Pull the launch URL from the dictionary rather than directly creating it with the terminal response in order to support setup
+    // Pull the launch URL to begin creating the terminal response.
     NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
-    if (launchURL)
-    {
+    if (launchURL) {
         [self application:application handleOpenURL:launchURL];
     }
     
     return YES;
 }
 
-// Used before iOS 4.2
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
-{
-    return [self application:application openURL:url sourceApplication:nil annotation:nil];
-}
-
-// Used in iOS 4.2 and later
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 {
-    if ([[url host] isEqualToString:SQURLAPISetupHost])
-    {
-        /*
-        NSDictionary *queryParamters = [url queryParameters];
-        [[NSUserDefaults standardUserDefaults] setObject:[queryParamters objectForKey:SQURLAPISetupAppIDParamaterKey] forKey:SQTerminalUserDefaultsAppIDKey];
-        [[NSUserDefaults standardUserDefaults] setObject:[queryParamters objectForKey:SQURLAPISetupRecipientParamaterKey] forKey:SQTerminalUserDefaultsRecipientKey];
-         */
+    // Create a terminalResponse from the calling URL.
+    SQTerminalResponse *terminalResponse = [SQTerminalResponse terminallResponseWithOpenURL:url];
+    if (terminalResponse) {
+        [self _handleTerminalResponse:terminalResponse];
+        return YES;
     }
-    else
-    {
-        // Create a terminalResponse from the calling URL
-        SQTerminalResponse *terminalResponse = [SQTerminalResponse terminallResponseWithOpenURL:url];
-        
-        if (terminalResponse)
-        {
-            [self handleTerminalResponse:terminalResponse];
-            return YES;
-        }
-    }
+    
     return NO;
-}
-
-- (void)dealloc;
-{
-    self.window = nil;
-    self.navController = nil;
-    [super dealloc];
 }
 
 #pragma mark Private Methods
 
-- (void)handleTerminalResponse:(SQTerminalResponse *)terminalResponse;
+- (void)_handleTerminalResponse:(SQTerminalResponse *)terminalResponse;
 {
-    if (!terminalResponse)
-    {
+    if (!terminalResponse) {
         return;
     }
     
     NSString *alertTitle = nil;
     NSString *alertMessage = nil;
     
-    switch (terminalResponse.status)
-    {
+    switch (terminalResponse.status) {
         case SQTerminalResponseStatusSuccessful:
             alertTitle = NSLocalizedString(@"Thanks!", @"thanks");
             alertMessage = NSLocalizedString(@"Square payment completed successfully.", @"payment completed successfully");
             
-            //
-            // Donation completed successfully-- clear out the app state except for the state,
-            // which is likely to remain the same so treat it as a pre-fill.
-            //
-            [[SQDonationModel theDonation] clearExceptState];
+            // Donation completed successfully-- clear out the app state except for the state, which is
+            // likely to remain the same so treat it as a pre-fill. 
+            [[SQDonation donation] clearExceptState];
             [self.navController popToRootViewControllerAnimated:NO];
             
             break;
             
         case SQTerminalResponseStatusError:
-            if (!terminalResponse.errors.count)
-            {
+            if (!terminalResponse.errors.count) {
                 alertTitle = NSLocalizedString(@"Error", @"error");
                 alertMessage = @"";
-            }
-            else if (terminalResponse.errors.count == 1)
-            {
+            } else if (terminalResponse.errors.count == 1) {
                 alertTitle = [[terminalResponse.errors objectAtIndex:0] localizedDescription];
                 alertMessage = [[terminalResponse.errors objectAtIndex:0] localizedRecoverySuggestion];                
-            }
-            else
-            {
-                alertTitle = NSLocalizedString(@"Multiple Errors Occured", @"multiple errors");
+            } else {
+                alertTitle = NSLocalizedString(@"Multiple Errors Occurred", @"multiple errors");
                 alertMessage = [[terminalResponse.errors valueForKey:@"localizedRecoverySuggestion"] componentsJoinedByString:@"\n"];
             }
             break;
@@ -156,16 +125,10 @@ static NSString *const SQURLAPISetupRecipientParamaterKey = @"to";
             break;
     }
     
-    if (alertTitle && alertMessage)
-    {
-        UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                             message:alertMessage
-                                                            delegate:nil
-                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"ok")
-                                                   otherButtonTitles:nil] autorelease];
+    if (alertTitle && alertMessage) {
+        UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"ok") otherButtonTitles:nil] autorelease];
         [alertView show];
     }
 }
-
 
 @end

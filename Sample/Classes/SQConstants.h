@@ -14,6 +14,6 @@
 // limitations under the License.
 //
 
-#define SQTerminalAppID             @"B2YYYATFTH6X8"
-#define SQTerminalRecipientKey      @"AXF7KJ0B6CD825"
-#define SQTerminalDescription       @"Campaign contribution"
+#define SQTerminalAppID @"B2YYYATFTH6X8"
+#define SQTerminalRecipientKey @"AXF7KJ0B6CD825"
+#define SQTerminalDescription @"Campaign contribution"
