@@ -24,6 +24,7 @@
 @interface SQDonationConfirmationViewController ()
 
 - (void)_updateUIFromModel;
+- (void)_releaseOutlets;
 
 @end
 
@@ -50,7 +51,7 @@
 
 - (void)dealloc;
 {
-    [self viewDidUnload];
+    [self _releaseOutlets];
     
     [super dealloc];
 }
@@ -81,17 +82,9 @@
 
 - (void)viewDidUnload;
 {
-    self.scrollView = nil;
-    self.formView = nil;
+    [super viewDidUnload];
     
-    self.name = nil;
-    self.street = nil;
-    self.cityStateZip = nil;
-    self.employer = nil;
-    self.occupation = nil;
-    self.donationAmount = nil;
-    
-    [super viewDidUnload];    
+    [self _releaseOutlets];
 }
 
 #pragma mark - Actions
@@ -114,6 +107,21 @@
 }
 
 #pragma mark - Private Methods
+
+- (void)_releaseOutlets;
+{
+    self.scrollView = nil;
+    self.formView = nil;
+    self.legaleseView = nil;
+    
+    self.name = nil;
+    self.email = nil;
+    self.street = nil;
+    self.cityStateZip = nil;
+    self.employer = nil;
+    self.occupation = nil;
+    self.donationAmount = nil;
+}
 
 - (void)_updateUIFromModel;
 {

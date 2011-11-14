@@ -37,6 +37,6 @@
 
 -(IBAction)fieldDidBeginEditing:(id)sender;
 -(IBAction)fieldDidChange:(id)sender;
--(IBAction)continue:(id)sender;
+-(IBAction)continuePressed:(id)sender;
 
 @end

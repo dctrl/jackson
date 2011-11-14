@@ -183,7 +183,7 @@
     if (nextResponder) {
         [nextResponder becomeFirstResponder];
     } else if ([self _fieldsValid]) {
-        [self continue:self];
+        [self continuePressed:self];
     } else {
         [textField resignFirstResponder];
     }
@@ -230,7 +230,7 @@
     [self _validateFields];
 }
 
--(IBAction)continue:(id)sender;
+-(IBAction)continuePressed:(id)sender;
 {
     [self _saveFormValuesToModel];
     
@@ -318,6 +318,7 @@
 {
     self.scrollView = nil;
     self.formView = nil;
+    self.legaleseView = nil;
     
     self.donationAmount = nil;
     self.name = nil;
