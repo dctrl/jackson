@@ -114,8 +114,7 @@
     if ([[SQDonation donation].amount isZero]) {
         // If we are about to display with a zero donation amount, treat this as a clean form--
         // scroll up to to show the logo, resign all first responders to drop the keyboard.
-        for (UITextField *textField in self.formTextFields)
-        {
+        for (UITextField *textField in self.formTextFields) {
             [textField resignFirstResponder];
         }
         

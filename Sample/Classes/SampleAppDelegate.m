@@ -45,7 +45,20 @@
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
-{    
+{
+    if ([SQTerminalAppID length] == 0 || [SQTerminalRecipientKey length] == 0) {
+        NSString *alertTitle = NSLocalizedString(@"No App ID", @"No App ID");
+        NSString *alertMessage = NSLocalizedString(@"A Square App ID must be configured before using this sample app. Please see the source code for information.", @"No App ID Message");
+        
+        UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:alertTitle
+                                                             message:alertMessage
+                                                            delegate:nil
+                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"ok")
+                                                   otherButtonTitles:nil] autorelease];
+        
+        [alertView show];
+    }
+    
     SQDonationFormViewController *homeViewController = [[SQDonationFormViewController alloc] init];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
