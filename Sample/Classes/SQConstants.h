@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
-#define SQTerminalAppID @"B2YYYATFTH6X8"
-#define SQTerminalRecipientKey @"AXF7KJ0B6CD825"
+#warning "You'll need Square App IDs to have an app capable of delegating payments."
+
+#define SQTerminalAppID @""
+#define SQTerminalRecipientKey @""
 #define SQTerminalDescription @"Campaign contribution"
