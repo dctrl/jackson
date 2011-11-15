@@ -35,6 +35,8 @@
 - (void)_scootToField:(UITextField *)textField animated:(BOOL)animated;
 
 - (void)_releaseOutlets;
+
+- (void)_registerForKeyboardNotifications;
 - (void)_removeKeyboardObservers;
 
 @end
@@ -68,8 +70,6 @@
 
 - (void)dealloc
 {
-    self.formTextFields = nil;
-    
     [self _removeKeyboardObservers];
     [self _releaseOutlets];
     
@@ -107,24 +107,27 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
+    [self _registerForKeyboardNotifications];
+    
     [self _loadFormValuesFromModel];
     
     if ([[SQDonation donation].amount isZero]) {
         // If we are about to display with a zero donation amount, treat this as a clean form--
         // scroll up to to show the logo, resign all first responders to drop the keyboard.
-        [self.formView endEditing:YES];
+        for (UITextField *textField in self.formTextFields)
+        {
+            [textField resignFirstResponder];
+        }
+        
         self.scrollView.contentOffset = CGPointZero;
-    } else {
-        [self _scootToFirstResponderAnimated:NO];
+        
+        // Unsatisfying, but at this point a keyboard might be left over from a previous run
+        // and there will be no keyboard drop notification from the resigns we just did.
+        // Since we're resigning them all anyway, just set our contentInset back to 0.
+        UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+        scrollView.contentInset = contentInsets;
+        scrollView.scrollIndicatorInsets = contentInsets;
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -137,9 +140,6 @@
 - (void)viewDidUnload
 {
     [self _saveFormValuesToModel];
-    
-    self.formTextFields = nil;
-    [self _removeKeyboardObservers];
     [self _releaseOutlets];
 
     [super viewDidUnload];
@@ -194,27 +194,21 @@
 
 #pragma mark - UIKeyboard notifications
 
-- (void)keyboardWillShow:(NSNotification *)notification;
-{
-    NSDictionary *info = [notification userInfo];
-    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-
-    // Reduce the scroller at the same rate as the keyboard is coming up.
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-        CGRect scrollerFrame = self.scrollView.frame;
-        scrollerFrame.size.height -= keyboardSize.height;
-        self.scrollView.frame = scrollerFrame;
-    } completion:nil];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification;
+- (void)keyboardWasShown:(NSNotification *)notification;
 {
     NSDictionary *info = [notification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    CGRect scrollerFrame = self.scrollView.frame;
-    scrollerFrame.size.height += keyboardSize.height;
-    self.scrollView.frame = scrollerFrame;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    scrollView.contentInset = contentInsets;
+    scrollView.scrollIndicatorInsets = contentInsets;
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)notification;
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    scrollView.contentInset = contentInsets;
+    scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 #pragma mark - Actions
@@ -302,20 +296,27 @@
 - (void)_scootToFirstResponderAnimated:(BOOL)animated;
 {
     for (UITextField *formTextField in self.formTextFields) {
-        [self _scootToField:formTextField animated:NO];        
+        if ([formTextField isFirstResponder]) {
+            [self _scootToField:formTextField animated:NO];
+        }
     }
 }
 
 - (void)_scootToField:(UITextField *)textField animated:(BOOL)animated;
 {
+    // Scroll to 80.0f pixels above the desired text field, but never more than the edge of the content
+    // (contentSize - scrollView bounds adjusted for inset).
     const CGFloat verticalInset = 80.0f;
-    CGFloat contentHeight = MIN(textField.frame.origin.y - verticalInset, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
+    CGFloat contentHeight = MIN((textField.frame.origin.y - verticalInset),
+                                (self.scrollView.contentSize.height - (self.scrollView.bounds.size.height - scrollView.contentInset.bottom)));
     
     [self.scrollView setContentOffset:CGPointMake(0, contentHeight) animated:animated];
 }
 
 - (void)_releaseOutlets;
 {
+    self.formTextFields = nil;
+    
     self.scrollView = nil;
     self.formView = nil;
     self.legaleseView = nil;
@@ -333,10 +334,23 @@
     self.contributeButton = nil;
 }
 
+- (void)_registerForKeyboardNotifications;
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+}
+
 - (void)_removeKeyboardObservers;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
