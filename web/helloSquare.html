@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<head>
+  <meta name = "viewport" content = "width = 320, user-scalable = no" >
+  <title>Hello Square</title>
+  <script>
+    // Replace with your app and recipient IDs.
+    var APP_ID = "my-app-id";
+    var TO_ID = "my-merchant-id";
+
+    var PROTOCOL = "square";
+
+    var test_app;
+    var test_to;
+    var test_protocol;
+
+    // Replace with the URL for this page
+    var MY_SITE = "http://example.com/helloSquare.html";
+
+    function here() {
+      var here = window.location.href;
+      var paramsAt = here.indexOf("?");
+      if (paramsAt > -1) {
+        here = here.substring(0, paramsAt);
+      }
+
+      var testParams = { test_app: test_app, test_to: test_to, test_protocol: test_protocol }
+
+      var first = true;
+      for (var k in testParams) {
+        if (testParams[k]) {
+          here += first ? "?" : "&";
+          first = false;
+          here += k + "=" + testParams[k];
+        }
+      }
+
+      return here;
+    }
+
+    function kickABuck(dollarValue) {
+      dollarValue += ".00";
+      var goTo = (test_protocol ? test_protocol : PROTOCOL) + "://terminal/1.0/pay" +
+          "?amount=" + dollarValue + 
+          "&metadata=your own app specific info archived by Square" +
+          "&currency=USD" +
+          "&default_email=sampleuser@demo.com" +
+          "&default_phone=555-555-5555" +
+          "&description=User visible description of this payment" +
+          "&app_id=" + (test_app ? test_app : APP_ID) +
+          "&to=" + (test_to ? test_to : TO_ID) +
+          "&reference_id=your own app specific id, echoed in the response" +
+          // Note that the callback url must be encoded
+          "&callback=" + encodeURIComponent(here());
+      window.location = goTo;
+    }
+
+    function grovelSearch(search) {
+      var params = search.substring(1); // drop leading "?"
+      var pairs = params.split("&");
+      var rtn = {};
+      for (var i = 0, len = pairs.length; i < len; i++) {
+        var split = pairs[i].split("=");
+        rtn[split[0]] = decodeURIComponent(split[1]);
+      }
+      return rtn;
+    }
+
+    function report(results) {
+      var elm = document.getElementById("echoElement");
+
+      if (!results.square_status) return;
+
+      if (results.square_status == "successful") {
+        elm.className += " happy";
+        elm.innerText = "Payment made";
+      } else if (results.square_status == "cancelled" /* sic */) {
+        elm.className += " meh";
+        elm.innerText = "Payment canceled";
+      } else {
+        elm.className += " sad";
+        elm.innerText = "Error: " + results.square_errors;
+      }
+    }
+
+    function dumpDebug(results) {
+      var debug = "";
+      for (r in results) {
+        debug += r + ": " + results[r] + "\n";
+      }
+      document.getElementById("debugElement").innerText = debug;
+    }
+
+    function init() {
+      if (location.search) {
+        params = grovelSearch(location.search);
+
+        if (params.test_app) test_app = params.test_app;
+        if (params.test_to) test_to = params.test_to;
+        if (params.test_protocol) test_protocol = params.test_protocol;
+
+        report(params);
+        dumpDebug(params);
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family:sans-serif;
+      padding: 2em;
+    }
+
+    button {
+      font-size: large;
+      padding: 2em;
+    }
+ 
+    .buttonRow {
+      text-align:center;
+    }
+
+    .report {
+      border-radius:.5em;
+      padding: .5em;
+      text-align:center;
+    }
+
+    .happy {
+      background-color:#99FF99;
+    }
+
+    .meh { 
+      background-color:#FFFF99;
+    }
+
+    .sad { 
+      background-color:#FF3333;
+    }
+
+    .debug {
+      width: 15em;
+      font-style: oblique;
+      font-size: small;
+    }
+  </style>
+</head>
+<body onload="init()">
+  <p class="buttonRow"><button onclick="kickABuck(1)">Kick a buck</button></p>
+  <p class="report" id="echoElement"/>
+  <p class="debug" id="debugElement"/>
+</body>
