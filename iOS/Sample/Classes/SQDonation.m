@@ -23,6 +23,7 @@
 @interface SQDonation () 
 
 - (NSString *)_terminalRequestMetadata;
+- (NSString *)_sanitizedValueForString:(NSString *)string;
     
 @end
 
@@ -30,7 +31,8 @@
 
 @synthesize isEmpty;
 @synthesize amount;
-@synthesize name;
+@synthesize firstName;
+@synthesize lastName;
 @synthesize email;
 @synthesize street;
 @synthesize street2;
@@ -69,7 +71,8 @@
 -(void)dealloc;
 {
     self.amount = nil;
-    self.name = nil;
+    self.firstName = nil;
+    self.lastName = nil;
     self.email = nil;
     self.street = nil;
     self.street2 = nil;
@@ -113,7 +116,8 @@
 - (void)clearExceptState;
 {
     self.amount = [SQMoney money];
-    self.name = @"";
+    self.firstName = @"";
+    self.lastName = @"";
     self.email = @"";
     self.employer = @"";
     self.street = @"";
@@ -129,20 +133,21 @@
 - (NSString *)_terminalRequestMetadata;
 {
     NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
-    [metadata setValue:self.name forKey:@"name"];
-    [metadata setValue:self.email forKey:@"email"];
+    [metadata setValue:[self _sanitizedValueForString:self.firstName] forKey:@"firstName"];
+    [metadata setValue:[self _sanitizedValueForString:self.lastName] forKey:@"lastName"];
+    [metadata setValue:[self _sanitizedValueForString:self.email] forKey:@"email"];
     
     NSMutableDictionary *address = [NSMutableDictionary dictionary];
-    [address setValue:self.street forKey:@"street"];
-    [address setValue:self.street2 forKey:@"street2"];
-    [address setValue:self.city forKey:@"city"];
-    [address setValue:self.state forKey:@"state"];
-    [address setValue:self.zip forKey:@"zip"];
+    [address setValue:[self _sanitizedValueForString:self.street] forKey:@"street"];
+    [address setValue:[self _sanitizedValueForString:self.street2] forKey:@"street2"];
+    [address setValue:[self _sanitizedValueForString:self.city] forKey:@"city"];
+    [address setValue:[self _sanitizedValueForString:self.state] forKey:@"state"];
+    [address setValue:[self _sanitizedValueForString:self.zip] forKey:@"zip"];
     [metadata setValue:address forKey:@"address"];
     
     NSMutableDictionary *employment = [NSMutableDictionary dictionary];
-    [employment setValue:self.employer forKey:@"employer"];
-    [employment setValue:self.occupation forKey:@"occupation"];
+    [employment setValue:[self _sanitizedValueForString:self.employer] forKey:@"employer"];
+    [employment setValue:[self _sanitizedValueForString:self.occupation] forKey:@"occupation"];
     [metadata setValue:employment forKey:@"employment"];
 
     NSError *error = nil;
@@ -155,5 +160,13 @@
     return [[[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding] autorelease];
 }
 
+- (NSString *)_sanitizedValueForString:(NSString *)string;
+{
+    if (string.length) {
+        return string;
+    }
+    
+    return @"";
+}
 
 @end

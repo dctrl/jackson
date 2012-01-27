@@ -31,6 +31,7 @@
 		C425FB15146B377400140604 /* SQDonationFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C425FB13146B377400140604 /* SQDonationFormViewController.xib */; };
 		C425FB1B146B5DBA00140604 /* SQDonation.m in Sources */ = {isa = PBXBuildFile; fileRef = C425FB1A146B5DBA00140604 /* SQDonation.m */; };
 		C425FB20146B77BE00140604 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = C425FB1E146B77BE00140604 /* Background.png */; };
+		C4BB252514D339C300D0F231 /* UnitedStates.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4BB252414D339C300D0F231 /* UnitedStates.plist */; };
 		D8D5B794146F19DC00637F95 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D8D5B793146F19DC00637F95 /* Logo.png */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +66,7 @@
 		2F83113313BFC15600663160 /* SQTerminalResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQTerminalResponse.m; sourceTree = "<group>"; };
 		2F83113413BFC15600663160 /* SquareKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareKit.h; sourceTree = "<group>"; };
 		2F83113513BFC15600663160 /* SquareKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareKit.m; sourceTree = "<group>"; };
-		2FAB29D213E1C87A0083B28E /* SQDonationConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SQDonationConfirmationViewController.h; sourceTree = "<group>"; };
+		2FAB29D213E1C87A0083B28E /* SQDonationConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQDonationConfirmationViewController.h; sourceTree = "<group>"; };
 		2FAB29D313E1C87A0083B28E /* SQDonationConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQDonationConfirmationViewController.m; sourceTree = "<group>"; };
 		2FAB29D413E1C87A0083B28E /* SQDonationConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SQDonationConfirmationViewController.xib; sourceTree = "<group>"; };
 		59B1771D13F30FFF002DD443 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 		C425FB19146B5DBA00140604 /* SQDonation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQDonation.h; sourceTree = "<group>"; };
 		C425FB1A146B5DBA00140604 /* SQDonation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQDonation.m; sourceTree = "<group>"; };
 		C425FB1E146B77BE00140604 /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		C4BB252414D339C300D0F231 /* UnitedStates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UnitedStates.plist; sourceTree = "<group>"; };
 		D8D5B793146F19DC00637F95 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		F17B909113EB279C006AEDE3 /* SQConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,6 +145,7 @@
 				59B1771D13F30FFF002DD443 /* Icon.png */,
 				59B1771F13F3100C002DD443 /* Icon@2x.png */,
 				2F83111013BFC01100663160 /* Sample-Info.plist */,
+				C4BB252414D339C300D0F231 /* UnitedStates.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				C425FB15146B377400140604 /* SQDonationFormViewController.xib in Resources */,
 				C425FB20146B77BE00140604 /* Background.png in Resources */,
 				D8D5B794146F19DC00637F95 /* Logo.png in Resources */,
+				C4BB252514D339C300D0F231 /* UnitedStates.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

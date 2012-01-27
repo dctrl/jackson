@@ -20,10 +20,13 @@
 #import "SQMoney.h"
 #import "SQDonationConfirmationViewController.h"
 
+static NSArray *stateNameArray = nil;
+static NSDictionary *stateDictionary = nil;
 
 @interface SQDonationFormViewController ()
 
 @property (nonatomic, retain) NSArray *formTextFields;
+@property (nonatomic, retain) UIPickerView *statePicker;
 
 - (void)_loadFormValuesFromModel;
 - (void)_saveFormValuesToModel;
@@ -31,7 +34,6 @@
 - (void)_validateFields;
 - (BOOL)_fieldsValid;
 
-- (void)_scootToFirstResponderAnimated:(BOOL)animated;
 - (void)_scootToField:(UITextField *)textField animated:(BOOL)animated;
 
 - (void)_releaseOutlets;
@@ -60,6 +62,7 @@
 @synthesize contributeButton;
 
 @synthesize formTextFields;
+@synthesize statePicker;
 
 #pragma mark - Initialization
 
@@ -82,12 +85,28 @@
 {
     [super viewDidLoad];
     
+    if (!stateDictionary) {
+        stateDictionary = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"UnitedStates" ofType:@"plist"]] retain];
+        stateNameArray = [[stateDictionary.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] retain];
+    }
+    
+    if (!self.statePicker) {
+        self.statePicker = [[[UIPickerView alloc] init] autorelease];
+        self.statePicker.delegate = self;
+        self.statePicker.dataSource = self;
+        self.statePicker.showsSelectionIndicator = YES;
+        
+        self.state.inputView = self.statePicker;
+    }
+    
     self.navigationItem.title = NSLocalizedString(@"Donate", @"Donate view title");
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     self.scrollView.contentSize = self.formView.bounds.size;
     
+    // Don't scale the background texture on 2x screens.
     UIImage *patternImage = [UIImage imageNamed:@"Background.png"];
+    patternImage = [UIImage imageWithCGImage:[patternImage CGImage] scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:patternImage];
     
     self.formTextFields = [NSArray arrayWithObjects:donationAmount, name, email, street, city, state, zip, employer, occupation, nil];
@@ -140,7 +159,7 @@
 {
     [self _saveFormValuesToModel];
     [self _releaseOutlets];
-
+    
     [super viewDidUnload];
 }
 
@@ -148,23 +167,31 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField != self.donationAmount) {
-        // Allow free edits to all fields other than the donation amount, or any edit where
-        // the replacement string is empty.
+    if (textField != self.donationAmount && textField != self.state) {
+        // Allow free edits to all fields other than the donation amount (which we'll handle ourselves here) or state, which we'll allow only through the picker.
         return YES;
     } else {
         SQMoney *amount = [SQDonation donation].amount;
-        NSString *centsString = [amount cents];
+        NSString *amountString = [amount cents];
+        
+        // We only want to accept whole dollars, so knock off the 00 cents from the end of the string while we add or cut from it.
+        if ([amountString hasSuffix:@"00"]) {
+            amountString = [amountString substringToIndex:([amountString length] - 2)];
+        }
         
         if (string.length == 1) {
             // Someone typed a digit, append that to the number of cents and stuff it back in.
-            amount = [SQMoney moneyWithCents:[centsString stringByAppendingString:string] currency:[SQMoney defaultCurrency]];
+            amountString = [amountString stringByAppendingString:string];
         }
         
         if (string.length == 0) {
             // Someone wants to remove a digit, kill the last digit of the cents and stuff it back in.
-            amount = [SQMoney moneyWithCents:[centsString substringToIndex:[centsString length] - 1] currency:[SQMoney defaultCurrency]];        
+            amountString = [amountString substringToIndex:[amountString length] - 1];
         }
+        
+        // Promote to dollars.
+        amountString = [amountString stringByAppendingString:@"00"];
+        amount = [SQMoney moneyWithCents:amountString currency:[SQMoney defaultCurrency]];
         
         // Save back the amount to the model immediately.
         [SQDonation donation].amount = amount;
@@ -182,13 +209,35 @@
     if (nextResponder) {
         [nextResponder becomeFirstResponder];
     } else if ([self _fieldsValid]) {
-        [self continuePressed:self];
+        [self continue:self];
     } else {
         [textField resignFirstResponder];
     }
     
     // We do not want UITextField to insert line-breaks.    
     return NO;
+}
+
+#pragma mark - UIPickerViewDelegate/DataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)aPickerView;
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)aPickerView numberOfRowsInComponent:(NSInteger)component;
+{
+    return stateNameArray.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)aPickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    return [stateNameArray objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)aPickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
+{
+    self.state.text = [stateDictionary objectForKey:[stateNameArray objectAtIndex:row]];
 }
 
 #pragma mark - UIKeyboard notifications
@@ -223,10 +272,10 @@
     [self _validateFields];
 }
 
--(IBAction)continuePressed:(id)sender;
+-(IBAction)continue:(id)sender;
 {
     [self _saveFormValuesToModel];
-    
+
     SQDonationConfirmationViewController *legalViewController = [[SQDonationConfirmationViewController alloc] init];
     [self.navigationController pushViewController:legalViewController animated:YES];
     [legalViewController release];
@@ -239,7 +288,7 @@
     SQDonation *donation = [SQDonation donation];
     
     self.donationAmount.text = [donation.amount displayValue];
-    self.name.text = donation.name;
+    self.name.text = [NSString stringWithFormat:@"%@ %@", donation.firstName, donation.lastName];
     self.email.text = donation.email;
     self.street.text = donation.street;
     self.city.text = donation.city;
@@ -253,10 +302,13 @@
 
 - (void)_saveFormValuesToModel;
 {
+    // Amount is kept up to date as the user types because SQMoney doesn't parse display strings.
     SQDonation *donation = [SQDonation donation];    
     
-    // Amount is kept up to date as the user types because SQMoney doesn't parse display strings.
-    donation.name = [self.name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSArray *names = [[self.name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    donation.firstName = names.count > 0 ? [names objectAtIndex:0] : nil;
+    donation.lastName = names.count > 1 ? [[names subarrayWithRange:NSMakeRange(1, names.count - 1)] componentsJoinedByString:@" "] : nil;
+    
     donation.email = [self.email.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     donation.street = [self.street.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     donation.city = [self.city.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -290,15 +342,6 @@
     }
     
     return isValid;
-}
-
-- (void)_scootToFirstResponderAnimated:(BOOL)animated;
-{
-    for (UITextField *formTextField in self.formTextFields) {
-        if ([formTextField isFirstResponder]) {
-            [self _scootToField:formTextField animated:NO];
-        }
-    }
 }
 
 - (void)_scootToField:(UITextField *)textField animated:(BOOL)animated;

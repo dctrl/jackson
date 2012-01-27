@@ -26,7 +26,8 @@
 
 @property (nonatomic, readonly) BOOL isEmpty;
 @property (nonatomic, copy) SQMoney *amount;
-@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *firstName;
+@property (nonatomic, copy) NSString *lastName;
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *street;
 @property (nonatomic, copy) NSString *street2;

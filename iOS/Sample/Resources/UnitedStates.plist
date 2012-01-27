@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Alabama</key>
+	<string>AL</string>
+	<key>Alaska</key>
+	<string>AK</string>
+	<key>Arizona</key>
+	<string>AZ</string>
+	<key>Arkansas</key>
+	<string>AR</string>
+	<key>California</key>
+	<string>CA</string>
+	<key>Colorado</key>
+	<string>CO</string>
+	<key>Connecticut</key>
+	<string>CT</string>
+	<key>Delaware</key>
+	<string>DE</string>
+	<key>District of Columbia</key>
+	<string>DC</string>
+	<key>Florida</key>
+	<string>FL</string>
+	<key>Georgia</key>
+	<string>GA</string>
+	<key>Hawaii</key>
+	<string>HI</string>
+	<key>Idaho</key>
+	<string>ID</string>
+	<key>Illinois</key>
+	<string>IL</string>
+	<key>Indiana</key>
+	<string>IN</string>
+	<key>Iowa</key>
+	<string>IA</string>
+	<key>Kansas</key>
+	<string>KS</string>
+	<key>Kentucky</key>
+	<string>KY</string>
+	<key>Louisiana</key>
+	<string>LA</string>
+	<key>Maine</key>
+	<string>ME</string>
+	<key>Maryland</key>
+	<string>MD</string>
+	<key>Massachusetts</key>
+	<string>MA</string>
+	<key>Michigan</key>
+	<string>MI</string>
+	<key>Minnesota</key>
+	<string>MN</string>
+	<key>Mississippi</key>
+	<string>MS</string>
+	<key>Missouri</key>
+	<string>MO</string>
+	<key>Montana</key>
+	<string>MT</string>
+	<key>Nebraska</key>
+	<string>NE</string>
+	<key>Nevada</key>
+	<string>NV</string>
+	<key>New Hampshire</key>
+	<string>NH</string>
+	<key>New Jersey</key>
+	<string>NJ</string>
+	<key>New Mexico</key>
+	<string>NM</string>
+	<key>New York</key>
+	<string>NY</string>
+	<key>North Carolina</key>
+	<string>NC</string>
+	<key>North Dakota</key>
+	<string>ND</string>
+	<key>Ohio</key>
+	<string>OH</string>
+	<key>Oklahoma</key>
+	<string>OK</string>
+	<key>Oregon</key>
+	<string>OR</string>
+	<key>Pennsylvania</key>
+	<string>PA</string>
+	<key>Rhode Island</key>
+	<string>RI</string>
+	<key>South Carolina</key>
+	<string>SC</string>
+	<key>South Dakota</key>
+	<string>SD</string>
+	<key>Tennessee</key>
+	<string>TN</string>
+	<key>Texas</key>
+	<string>TX</string>
+	<key>Utah</key>
+	<string>UT</string>
+	<key>Vermont</key>
+	<string>VT</string>
+	<key>Virginia</key>
+	<string>VA</string>
+	<key>Washington</key>
+	<string>WA</string>
+	<key>West Virginia</key>
+	<string>WV</string>
+	<key>Wisconsin</key>
+	<string>WI</string>
+	<key>Wyoming</key>
+	<string>WY</string>
+</dict>
+</plist>

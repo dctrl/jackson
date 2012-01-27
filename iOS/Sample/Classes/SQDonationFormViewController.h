@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SQDonationFormViewController : UIViewController
+@interface SQDonationFormViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet UIView *formView;
@@ -37,6 +37,6 @@
 
 -(IBAction)fieldDidBeginEditing:(id)sender;
 -(IBAction)fieldDidChange:(id)sender;
--(IBAction)continuePressed:(id)sender;
+-(IBAction)continue:(id)sender;
 
 @end

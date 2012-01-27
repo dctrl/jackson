@@ -65,7 +65,9 @@
     const CGFloat verticalHeightOffset = 44.0f;
     self.scrollView.contentSize = CGSizeMake(self.formView.bounds.size.width, self.formView.bounds.size.height + verticalHeightOffset);
     
+    // Don't scale the background texture on 2x screens.
     UIImage *patternImage = [UIImage imageNamed:@"Background.png"];
+    patternImage = [UIImage imageWithCGImage:[patternImage CGImage] scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:patternImage];
     
     self.legaleseView.layer.cornerRadius = 6.0f;
@@ -128,7 +130,7 @@
     SQDonation *donation = [SQDonation donation];
     
     self.donationAmount.text = [donation.amount displayValue];
-    self.name.text = donation.name;
+    self.name.text = [NSString stringWithFormat:@"%@ %@", donation.firstName, donation.lastName.length ? donation.lastName : @""];
     self.email.text = donation.email;
     self.street.text = donation.street;
     self.cityStateZip.text = [NSString stringWithFormat:@"%@, %@ %@", donation.city, donation.state, donation.zip];
